@@ -42,7 +42,7 @@ public class CreateContractBillController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String action=request.getParameter("action");
-		System.out.println("action");
+		
 		
 		if(action!=null && action.equalsIgnoreCase("submit"))
 		{
