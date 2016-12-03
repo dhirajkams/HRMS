@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.mysql.jdbc.Connection;
 
 import hrms.cargo.*;
+import hrms.dao.CreateContractJoineeDAO;
 /**
  * Servlet implementation class CreateContractJoineeServlet
  */
@@ -43,9 +45,11 @@ public class CreateContractJoineeController extends HttpServlet {
 		String action=request.getParameter("action");
 		Log.info(action);
 		{
-			if(action!= null && action.equalsIgnoreCase("submit"))
+			if(action!= null && action.equalsIgnoreCase("Submit"))
 			{
 		CreateContractJoineeCargo ccj=new CreateContractJoineeCargo();
+		
+		
 		ccj.setName(request.getParameter("name"));
 		ccj.setContactno(request.getParameter("contactno"));
 		ccj.setHr(request.getParameter("hr"));
@@ -59,40 +63,33 @@ public class CreateContractJoineeController extends HttpServlet {
 		ccj.setEmail(request.getParameter("email"));
 		
 		
+		try{
+			int i=0;
 		
- try
- {
-	    Class.forName("com.mysql.jdbc.Driver");
-		Connection con=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/hrms","root","root");
-		PreparedStatement ps=con.prepareStatement("insert into contract_joinee(name,contact_no,hr,client,position,date_of_joining,recruiter,relieving_date,rate,candidate_salary,email)values(?,?,?,?,?,?,?,?,?,?,?)");
-			ps.setString(1,ccj.getName());
-			ps.setString(2,ccj.getContactno());
-			ps.setString(3,ccj.getHr());
-			ps.setString(4,ccj.getClient());
-			ps.setString(5,ccj.getPosition());
-			ps.setString(6,ccj.getDateofjoining());
-			ps.setString(7,ccj.getRecruiter());
-			ps.setString(8,ccj.getRelievingdate());
-			ps.setString(9,ccj.getRate());
-			ps.setString(10,ccj.getCandidatesalary());
-			ps.setString(11,ccj.getEmail());
+		CreateContractJoineeDAO createContractJoineeDAO=new CreateContractJoineeDAO();
+		i=createContractJoineeDAO.insertRecord(ccj);
+		
+		if(i>0){
+			request.setAttribute("ContractJoinee", ccj);
+			request.setAttribute("ContractJoineeCreatedSuccess", "Record created successfully!");
+			RequestDispatcher rd = request.getRequestDispatcher("/CreateContractJoinees.jsp");
+			rd.forward(request, response);
 			
-			int rs=ps.executeUpdate();
-			
-			if(rs>0)
-			{
-				request.getSession().setAttribute("contractJoinee", ccj);
-				request.getSession().setAttribute("ContractJoineeSuccess","Record Inserted Successfully");
-				response.sendRedirect("CreateContractJoinee.jsp");
+			System.out.println("dhiraj");
+			/* request.getSession().setAttribute("Employee", emp);
+			request.getSession().setAttribute("EmployeeCreatedSuccess", "Record created successfully!"); // This is for session
+			response.sendRedirect("CreateNewEmployee.jsp");*/
+		}
+		else{
+			response.sendRedirect("Error.jsp");
+		}
+		
+ 	}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
 			}
- 
- }
-  
- catch(Exception e)
- {
-	 System.out.println(e);
- }
-	}
 	  else if(action!= null && action.equalsIgnoreCase("Home")){
 			response.sendRedirect("HR.jsp");
 		}
