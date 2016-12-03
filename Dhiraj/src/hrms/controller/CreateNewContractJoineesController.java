@@ -50,7 +50,7 @@ public class CreateNewContractJoineesController extends HttpServlet {
 		contractJoinee.setClient(request.getParameter("Client"));
 		contractJoinee.setPosition(request.getParameter("Position"));
 		contractJoinee.setRecruiter(request.getParameter("Recruiter"));
-		contractJoinee.setRecruiter(request.getParameter("Relieving"));
+		contractJoinee.setRelievingDate(request.getParameter("Relieving"));
 		contractJoinee.setRate(request.getParameter("Rate"));
 		contractJoinee.setCandidateSalary(request.getParameter("Candidate"));
 		contractJoinee.setEmail(request.getParameter("Email"));
@@ -61,7 +61,7 @@ public class CreateNewContractJoineesController extends HttpServlet {
 			System.out.println("Inside Try");
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
-			PreparedStatement ps=con.prepareStatement("Insert into contractjoinees(name,contactno,hr,client,position,recruiter,relieving_date,rate,candidate_salary,email,doj) values(?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps=con.prepareStatement("Insert into contract_joinee(name,contact_no,hr,client,position,recruiter,relieving_date,rate,candidate_salary,email,date_of_joining) values(?,?,?,?,?,?,?,?,?,?,?)");
 			ps.setString(1,contractJoinee.getName());	
 			ps.setString(2,contractJoinee.getContactNo());
 			ps.setString(3,contractJoinee.getHr());
