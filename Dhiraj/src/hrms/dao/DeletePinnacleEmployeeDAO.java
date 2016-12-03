@@ -11,6 +11,7 @@ public class DeletePinnacleEmployeeDAO {
 	public int deleteEmployee(EmployeeCargo emp) throws Exception {
 		// TODO Auto-generated method stub
 		int emp_id=emp.getEmpId();
+		System.out.println("test test");
 		
 		Connection con=null;
 		PreparedStatement ps=null;
