@@ -10,7 +10,7 @@ public class CreateNewEmployeeDAO {
 	PreparedStatement ps;
 	
 	public int insertRecord(EmployeeCargo emp) throws Exception {
-		System.out.println("test again");
+	
 		String fname=emp.getFirstName();
 		String lname=emp.getLastName();
 		String doj=emp.getDoj();
