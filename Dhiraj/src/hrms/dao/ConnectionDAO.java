@@ -12,7 +12,7 @@ public class ConnectionDAO {
 			
 			Class.forName("com.mysql.jdbc.Driver");
 			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hrms","root","root");
-			System.out.println("Test 3 from kunal side again commit activity");
+			System.out.println("Test 4 from dhiraj side again commit activity");
 			}
 		catch(Exception e){
 			e.printStackTrace();
